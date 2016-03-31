@@ -16,8 +16,7 @@ end
 directory '/etc/systemd/system/docker.service.d'
 
 if node['docker']['secure']['registry']
-  directory '/root/.docker'
-  template '/root/.docker/config.json' do
+  template '/.dockercfg' do
     source 'dockerconfig.erb'
     variables(
       docker_registry: node['docker']['secure']['registry'],
