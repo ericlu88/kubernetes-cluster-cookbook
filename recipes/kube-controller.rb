@@ -5,16 +5,12 @@
 # Copyright 2015-2016, Bloomberg Finance L.P.
 #
 
-file '/var/log/kube-controller-manager.log' do
-  action :touch
+service 'kube-controller-manager' do
+  action :enable
 end
 
-template '/etc/kubernetes/inactive-manifests/controller-manager.yaml' do
+template '/etc/kubernetes/controller-manager' do
   mode '0640'
-  source 'kube-controller-manager.erb'
-  variables(
-    controller_manager_image: node['kubernetes']['master']['controller-manager-source'],
-    kubernetes_api_port: node['kubernetes']['insecure']['apiport'],
-    etcd_cert_dir: node['kubernetes']['secure']['directory']
-  )
+  source 'kube-controller.erb'
+  notifies :restart, 'service[kube-controller-manager]', :immediately
 end

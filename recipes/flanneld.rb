@@ -13,10 +13,6 @@ service 'docker' do
   action :nothing
 end
 
-service 'kubelet' do
-  action :nothing
-end
-
 execute 'redo-docker-bridge' do
   command 'ifconfig docker0 down; brctl delbr docker0'
   action :nothing
@@ -32,5 +28,4 @@ template '/etc/sysconfig/flanneld' do
   )
   notifies :restart, 'service[flanneld]', :immediately
   notifies :run, 'execute[redo-docker-bridge]', :delayed
-  notifies :restart, 'service[kubelet]', :delayed
 end

@@ -23,14 +23,8 @@ group 'kube-services' do
   action :modify
 end
 
-directory '/etc/kubernetes/inactive-manifests' do
-  owner 'root'
-  group 'kube-services'
-  mode '0770'
-end
-
-directory '/etc/kubernetes/manifests' do
-  owner 'root'
+directory '/var/run/kubernetes' do
+  owner 'kube'
   group 'kube-services'
   mode '0770'
 end
@@ -87,7 +81,5 @@ include_recipe 'kubernetes-cluster::kube-apiserver'
 include_recipe 'kubernetes-cluster::network'
 include_recipe 'kubernetes-cluster::docker'
 include_recipe 'kubernetes-cluster::flanneld'
-include_recipe 'kubernetes-cluster::kubelet'
 include_recipe 'kubernetes-cluster::kube-controller'
 include_recipe 'kubernetes-cluster::kube-scheduler'
-include_recipe 'kubernetes-cluster::podmaster'

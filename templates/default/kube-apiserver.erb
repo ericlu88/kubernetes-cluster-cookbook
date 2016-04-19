@@ -8,6 +8,7 @@ KUBELET_PORT="--kubelet_port=<%= @kubelet_port %>"
 KUBE_ETCD_SERVERS="--etcd_servers=http://<%= @kubernetes_master %>:<%= @etcd_client_port %>"
 KUBE_SERVICE_ADDRESSES="--service-cluster-ip-range=<%= @kubernetes_network %>"
 KUBE_ADMISSION_CONTROL="--admission_control=NamespaceLifecycle,NamespaceExists,LimitRanger,SecurityContextDeny,ResourceQuota"
+KUBE_API_ARGS="--runtime-config=extensions/v1beta1=true"
 <% end -%>
 
 # Secure kube configuration parameters go under here when node['kubernetes']['secure']['enabled'] == 'true'
@@ -18,4 +19,5 @@ KUBELET_PORT="--kubelet_port=<%= @kubelet_port %>"
 KUBE_ETCD_SERVERS="--etcd-config=/etc/kubernetes/etcd.client.conf"
 KUBE_SERVICE_ADDRESSES="--service-cluster-ip-range=<%= @kubernetes_network %>"
 KUBE_ADMISSION_CONTROL="--admission_control=NamespaceLifecycle,NamespaceExists,LimitRanger,ResourceQuota --client-ca-file=<%= @etcd_cert_dir %>/client.ca.crt --tls-cert-file=<%= @etcd_cert_dir %>/client.srv.crt --tls-private-key-file=<%= @etcd_cert_dir %>/client.srv.key --kubelet-certificate-authority=<%= @etcd_cert_dir %>/client.ca.crt --kubelet-client-certificate=<%= @etcd_cert_dir %>/client.srv.crt --kubelet-client-key=<%= @etcd_cert_dir %>/client.srv.key"
+KUBE_API_ARGS="--runtime-config=extensions/v1beta1=true"
 <% end -%>
